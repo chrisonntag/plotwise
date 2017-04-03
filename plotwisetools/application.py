@@ -1,22 +1,56 @@
+import sys, csv, traceback
 import matplotlib.pyplot as plt
+from collections import defaultdict
+
+class ApplicationExit(BaseException):
+    pass
 
 class Application:
     def __init__(self, filepath):
-        self.labels = []
-        self.sizes = []
+        self.columns = defaultdict(list)
         self.filepath = filepath
+        self.expenses = {}
+
+    def sumUpList(self, lis):
+        summedUp = 0.0
+        for el in lis:
+            summedUp = summedUp + float(el)
+        
+        return summedUp
+
+    def parseColumn(self, name):
+        if not self.columns:
+            try:
+                data = csv.DictReader(open(self.filepath, 'r'))
+                for row in data: # read a row as {column1: value1, column2: value2,...}
+                    for (k,v) in row.items(): # go over each column name and value 
+                        self.columns[k].append(v)
+            except Exception as e:
+                print("Unable to read *.csv file")
+                traceback.print_exc(file=sys.stdout)
+                raise ApplicationExit()
+        return self.columns[name]
 
     def run(self):
-        print("Hello world!")
-
-    def plot(self):
+        # TODO: make column names and numbers more human readable, e.g. 2 = category
+        """
+        for cat, expense in self.parseColumn('Kategorie'), self.parseColumn('Kosten'):
+            if not cat in self.expenses:
+                self.expenses[cat] = [expense]
+            else:
+                self.expenses[cat].append(expense)
+        """
+        for k,v in zip(self.parseColumn('Kategorie'), self.parseColumn('Kosten')):
+            self.expenses.setdefault(k, []).append(v)
+        self.plotExpenses()
+                
+    def plotExpenses(self):
         # Pie chart, where the slices will be ordered and plotted counter-clockwise:
-        labels = self.labels
-        sizes = self.sizes
-        explode = (0, 0, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+        labels = [key for key in self.expenses]
+        sizes = [self.sumUpList(self.expenses[key]) for key in self.expenses]
 
         fig1, ax1 = plt.subplots()
-        ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+        ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
                     shadow=True, startangle=90)
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
