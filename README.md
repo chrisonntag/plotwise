@@ -8,8 +8,12 @@ F\*ck it, ship it.
 
 ## Usage
 
-Simply download the code and append the file with ```-f <yourfile>``` like so:
+Simply download the code, install all requirements in a virtual environment 
+and append the file with ```-f <yourfile>``` like so:
 
 ```bash
+$ pip install -r requirements.txt
 $ plotwise.py -f <path-to-your-file>
 ```
+
+Don't forget to activate your venv before: ```source path/to/venv/bin/activate```
