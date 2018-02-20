@@ -1,10 +1,10 @@
 # plotwise
 
 This tiny script creates pie diagrams out of exported [Splitwise](https://www.splitwise.com/) data. 
-It was originally coded in order to have an overview of how much money i've spent on vacation for 
+It was originally implemented in order to have an overview of how much money i've spent on vacation for 
 each category (Hotel, Transportation, Food, etc.).
 
-F\*ck it, ship it.
+![Example image](https://raw.githubusercontent.com/chrisonntag/plotwise/master/expenses.png)
 
 ## Usage
 
