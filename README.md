@@ -1,4 +1,4 @@
-# plotwise
+# plotwise [NOT MAINTAINED]
 
 This tiny script creates pie diagrams out of exported [Splitwise](https://www.splitwise.com/) data. 
 It was originally implemented in order to have an overview of how much money i've spent on vacation for 
